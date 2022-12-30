@@ -12,10 +12,10 @@ It has the following features:
 4. Adds basic argument parsing including `--verbose` and `--debug` modes for logging
 5. Configures basic logging (using the above)
 
-**Note**
-There's no magic, and nothing clever about this. 
-All just boring, basic, boilerplate. 
-It's handy to be able to copy this and use it quickly. 
+> **Note**
+> There's no magic, and nothing clever about this. 
+> All just boring, basic, boilerplate. 
+> It's handy to be able to copy this and use it quickly. 
 
 ## License 
 
