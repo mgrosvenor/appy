@@ -11,3 +11,6 @@ There's no magic, and nothing clever about this.
 All just boring, basic, boilerplate. 
 
 But it's handy to be able to copy this and use it quickly. 
+
+License TL;DR
+No copyright claim, no attribution claim, no warranty made. See LICENSE for full details.
