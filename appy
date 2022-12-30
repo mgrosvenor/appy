@@ -1,0 +1,69 @@
+#! /usr/bin/env python3
+import argparse
+import sys
+import os
+import logging
+import signal
+import time
+
+app_name = "My App"
+app_description = "App that does things"
+app_epilog = "For help contact help@example.com"
+
+# Global stop signal for exiting tight loops
+stop = 0
+
+# Print to stderr
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
+def main(config):
+    print(config)
+    i = 0
+    while not stop:
+        logging.info("Working %i" % i)
+        time.sleep(1)
+        i += 1
+
+    return 0
+
+def signal_handler(sig, frame):
+    logging.info('Exiting now, please wait...')
+    global stop
+    if stop > 1:
+        logging.warn('Forced exit!')
+        sys.exit(-1)
+
+    stop += 1
+
+if __name__ == "__main__":
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGHUP, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+
+    parser = argparse.ArgumentParser(
+        prog=app_name,
+        description=app_description,
+        epilog=app_epilog)
+
+    parser.add_argument(
+        '-d', '--debug',
+        help="Print lots of debugging statements",
+        action="store_const", dest="loglevel", const=logging.DEBUG,
+        default=logging.WARNING,
+    )
+    parser.add_argument(
+        '-v', '--verbose',
+        help="Be verbose",
+        action="store_const", dest="loglevel", const=logging.INFO,
+    )
+
+    config = parser.parse_args()
+    logging.basicConfig(level=config.loglevel)
+
+    logging.info("%s started" % app_name)
+    logging.info("Config:\n%s" % config)
+    ret = main(config)
+    logging.info("%s finished" % app_name)
+
+    sys.exit(ret)
